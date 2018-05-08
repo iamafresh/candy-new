@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { HashRouter as Router, Route } from 'react-router-dom'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 import './App.css'
 import mobileBg from './asset/images/h5/mobileBg.png'
 import pcBg from './asset/images/web/pcBg.png'
@@ -33,6 +34,21 @@ class App extends Component {
       locale: 'en',
       messages: enUS
     }
+    this.handleLanguage = this.handleLanguage.bind(this)
+  }
+
+  getChildContext () {
+    return {
+      locale: 'en',
+      toggle: this.handleLanguage
+    }
+  }
+
+  handleLanguage () {
+    this.setState({
+      locale: 'zh',
+      messages: zhCN
+    })
   }
 
   render () {
@@ -42,14 +58,19 @@ class App extends Component {
         messages={this.state.messages}
       >
         <Router>
-          <Wrapper className='App'>
-            <Route exact path='/' component={Home} />
+          <Wrapper className='App' locale={this.state.locale}>
+            <Route exact path='/' component={Home} locale={this.state.locale} />
             <Route path='/main' component={Main} />
           </Wrapper>
         </Router>
       </IntlProvider>
     )
   }
+}
+
+App.childContextTypes = {
+  locale: PropTypes.string,
+  toggle: PropTypes.func
 }
 
 export default App

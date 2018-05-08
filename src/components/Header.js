@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 import { Menu, Dropdown, Icon } from 'antd'
 
 const Wrapper = styled.div`
@@ -58,6 +59,10 @@ const menu = (
   </Menu>
 )
 class Header extends React.Component {
+  componentDidMount () {
+    console.log(this.context.locale)
+  }
+
   render () {
     return (
       <Wrapper>
@@ -66,12 +71,17 @@ class Header extends React.Component {
           trigger={['hover', 'click']}
         >
           <DropdownBox>
-            <Span href='#'>中文<Icon type='down' /></Span>
+            <Span href='#' onClick={this.context.toggle}>中文<Icon type='down' /></Span>
           </DropdownBox>
         </Dropdown>
       </Wrapper>
     )
   }
+}
+
+Header.contextTypes = {
+  locale: PropTypes.string,
+  toggle: PropTypes.func
 }
 
 export default Header

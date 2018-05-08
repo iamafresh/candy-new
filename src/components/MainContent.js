@@ -2,7 +2,11 @@ import React from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
 import { Message, Modal, Button } from 'antd'
-import { FormattedMessage } from 'react-intl'
+import {
+  FormattedMessage,
+  injectIntl,
+  defineMessages
+} from 'react-intl'
 import activity from '../asset/images/h5/activity.png'
 import '../asset/css/buttons.css'
 import P from './P'
@@ -68,6 +72,13 @@ const inputStyle = {
   paddingLeft: '.14rem',
   fontSize: '.12rem',
 }
+
+const messages = defineMessages({
+  get: {
+    id: 'get',
+    defaultMessage: '领取'
+  }
+})
 
 class MainContent extends React.Component {
   constructor (props) {
@@ -154,7 +165,8 @@ class MainContent extends React.Component {
     const activityName = '泰链科技'
     const introduceContent = 'TiC是泰链科技发行的数字货币。泰链科技是一家全球性的区块链技术落地服务商。公司从技术产品解决发币、发糖果、钱包、交易所、上链等区块链项目需求。泰链打造的全球性区块链服务，TiC将打通企业之间的业务交易与合作。'
     const explainContent = '输入以太坊地址，领取20个TiC。加入电报群输入验证码即可领取成功！每邀请1位好友加入电报群，还可获得10个TiC。'
-
+    const { formatMessage } = this.props.intl
+    
     return (
       <Wrapper>
         <LogoBox src={logoSrc} title='Tichain' />
@@ -164,7 +176,7 @@ class MainContent extends React.Component {
           <input style={inputStyle} type='text' ref={input => this.input = input} placeholder='请输入以太坊地址' />
           : null
         }
-        <BaseButton type='button' value='领取' onClick={this.handleSubmit}></BaseButton>
+        <BaseButton type='button' value={formatMessage(messages.get)} onClick={this.handleSubmit}></BaseButton>
         <Footer activityName={activityName}></Footer>
         
         <Modal
@@ -188,4 +200,4 @@ class MainContent extends React.Component {
   }
 }
 
-export default MainContent
+export default injectIntl(MainContent)

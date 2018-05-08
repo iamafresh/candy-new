@@ -4,6 +4,10 @@ import MainContent from './components/MainContent'
 import Wrapper from './components/Wrapper'
 
 class Home extends React.Component {
+  componentDidMount () {
+    console.log(this.props)
+  }
+
   render () {
     return (
       <Wrapper>
